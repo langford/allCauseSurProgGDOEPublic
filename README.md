@@ -133,7 +133,7 @@ kindergarten projections.
 ### Checking the tools/other projection coefficients
 
 Now since these tools *don't actually have a source of kindergarten data* for
-the current time spam, they do forward projections themselves for
+the current time span, they do forward projections themselves for
 elementary schools over past data to check the correctness of previous results.
 calc_coeff.py does not use projected kindergarteners, just the historical ones though. The
 tools correctly direguard Pre-K from the school totals.
