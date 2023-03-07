@@ -353,7 +353,9 @@ match the computer expected format.
 Please be aware: Extraneous spaces at the beginning/end of a school name can
 cause the tool to break. You should always "bench check" each high school by
 picking one grade at all the schools you know eventually feed into it and check
-the output in the 
+the output by making sure it manually sums to what the tool shows in the
+"actual" row. If it doesn't, the mapping file is likely missing a line showing
+how kids progress for the school you're modelling.
 
 #### How does the tool deal with changes/rezonings
 
