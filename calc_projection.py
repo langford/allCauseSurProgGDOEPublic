@@ -27,6 +27,7 @@ parser.add_argument('--ffend', nargs="?", type=int, const=2028)
 parser.add_argument('--ffstart',nargs="?", type=int, const=2023)
 parser.add_argument('--finend', nargs="?", type=int, const=8)
 parser.add_argument('--ffkindercounts', help='comma delimited list input of kindergartener counts', type=str)
+parser.add_argument('--capacity', help='optional capacity of the facility in question', type=int)
 
 args = parser.parse_args()
 
@@ -185,6 +186,8 @@ for (yr) in d.keys():
       if(debug): print(d[start_fyr][1])
       if(debug): print(d[start_fyr][1][KINDER_OFFSET:])
       print("FF {}".format(args.filename))
+      print()
+      print()
       print("FF Projecting using SM basic method treating FY{} as actual data start year and using {}  ({}) for fiscal years {}-{}".format(start_fyr,kinderSourceDesc,kinders,projecting_over[0], projecting_over[-1]))
       print("FF coeffs used = {}".format(",".join(surv_rates)))
       description = "actual {}-{}".format(start_fyr-1, start_fyr)
@@ -193,9 +196,37 @@ for (yr) in d.keys():
       ptotal = str(functools.reduce(lambda a,b: int(a)+int(b), cohorts[0:len(cohorts)-1]))
       
 
+      def cohortReport(cohorts):
+          etotal =functools.reduce(lambda a,b: int(a)+int(b), cohorts[0:len(cohorts)-8])
+          mtotal =functools.reduce(lambda a,b: int(a)+int(b), cohorts[len(cohorts)-8:len(cohorts)-5])
+          htotal =functools.reduce(lambda a,b: int(a)+int(b), cohorts[len(cohorts)-5:len(cohorts)-1])
 
+          if not args.capacity:
+            return [etotal, mtotal, htotal]
+
+          etotal = [etotal] + [ "{:0.3f}%".format(round(100.0 * float(etotal)/float(args.capacity),3)) ]
+          mtotal = [mtotal] + [ "{:0.3f}%".format(round(100.0 * float(mtotal)/float(args.capacity),3)) ]
+          htotal = [htotal] + [ "{:0.3f}%".format(round(100.0 * float(htotal)/float(args.capacity),3)) ]   
+          school_breaks = etotal+mtotal+htotal
+          return school_breaks
+  
+
+      
       cohorts[len(cohorts)-1] = ptotal
-      print("FF {}: {}  ['KK-5', '6-8', '9-12'] (note sums do not include Pre-K)".format(description, ",".join(cohorts)))
+      school_breaks = cohortReport(cohorts)
+      cohortNames = ["GKK","G01","G02","G03","G04","G05","G06","G07","G08","G09","G10","G11","G12","Sum"]
+      header = "FF    Year Info     , {},   KK-5,  6-8, 9-12 (note sums do not include Pre-K)".format( ",".join(cohortNames))
+     
+      if args.capacity:
+        print("{} supplied on command line as capacity, will be used to calc %capacity for k-5, 6-8 and 9-12 for the given facility. Disreguard the two meaningless % capacity columns (i.e. the ones it doesn't refer to)".format( args.capacity))
+        header = "FF    Year Info     , {},   KK-5, KK-5%Cap,  6-8, 6-8%Cap, 9-12, 9-12%Cap".format( ",".join(cohortNames))
+      
+      print()
+      print(header)
+      actualYearPrintout =  "FF {}:, {},  {}  ".format(description, ",".join(cohorts),", ".join([str(i) for i in school_breaks]))
+      print(actualYearPrintout)
+
+      
 
       for proj_year_index in range(len(projecting_over)):
         proj_year = projecting_over[proj_year_index]
@@ -209,10 +240,7 @@ for (yr) in d.keys():
           cohorts[index] = int(round(float(lastyr) * rate ,0))
         ptotal = functools.reduce(lambda a,b: a+b, cohorts[:-1])
         if(len(cohorts)==14):
-          etotal=str(functools.reduce(lambda a,b: int(a)+int(b), cohorts[0:len(cohorts)-8]))
-          mtotal=str(functools.reduce(lambda a,b: int(a)+int(b), cohorts[len(cohorts)-8:len(cohorts)-5]))
-          htotal=str(functools.reduce(lambda a,b: int(a)+int(b), cohorts[len(cohorts)-5:len(cohorts)-1]))
-          school_breaks = [etotal,mtotal,htotal]
+          school_breaks = cohortReport(cohorts)
         cohorts[len(cohorts)-1] = ptotal
         at = float(actual_totals[proj_year_index]) - preks[proj_year_index]
         raw_err = float(ptotal-at)/float(at)
@@ -221,6 +249,6 @@ for (yr) in d.keys():
         if err < 0.0: 
           err_desc = "underestimate"
           err = 0.0 - err
-        print("FF {}: {}  {}".format(description, ",".join([str(int(i)) for i in cohorts]),school_breaks))
+        print("FF {}:, {},  {}".format(description, ",".join([str(int(i)) for i in cohorts]),", ".join([str(i) for i in school_breaks])))
       
 

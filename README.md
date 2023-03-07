@@ -201,41 +201,75 @@ years)
 
 Partial Output from a HS
 
-   FF actual 202X-202Y: 509,558,508,524,494,473,467,432,470,474,410,358,360,6037  ['KK-5', '6-8', '9-12'] (note sums do not include Pre-K)
-   FF proj.  202Z-202Q: 509,518,544,491,502,470,456,453,414,478,432,400,347,6014  ['3034', '1323', '1657']
+<pre>
+FF    Year Info     , GKK,G01,G02,G03,G04,G05,G06,G07,G08,G09,G10,G11,G12,Sum,   KK-5,  6-8, 9-12 (note sums do not include Pre-K)
+FF actual 2022-2023:, 509,558,508,524,494,473,467,432,470,474,410,358,360,6037,  3066, 1369, 1602
+FF proj.  2023-2024:, 509,518,544,491,502,470,456,453,414,478,432,400,347,6014,  3034, 1323, 1657
+FF proj.  2024-2025:, 509,518,505,526,471,478,453,443,434,421,436,421,388,6003,  3007, 1330, 1666
+</pre>
 
 Partial Output from a MS (note how the HS grades are empty)
 
-  FF actual 202X-202Y: 412,460,421,440,396,383,367,348,404,0,0,0,0,3631  ['KK-5', '6-8', '9-12'] (note sums do not include Pre-K)
-  FF proj.  202Z-202Q: 412,417,446,405,423,376,373,359,338,0,0,0,0,3549  ['2479', '1070', '0']
-
+<pre>
+FF    Year Info     , GKK,G01,G02,G03,G04,G05,G06,G07,G08,G09,G10,G11,G12,Sum,   KK-5,  6-8, 9-12 (note sums do not include Pre-K)
+FF actual 2022-2023:, 412,460,421,440,396,383,367,348,404,0,0,0,0,3631,  2512, 1119, 0
+FF proj.  2023-2024:, 412,417,446,405,423,376,373,359,338,0,0,0,0,3549,  2479, 1070, 0
+FF proj.  2024-2025:, 412,417,404,429,389,401,366,365,348,0,0,0,0,3531,  2452, 1079, 0
+</pre>
 
 I hope this tool is useful is quickly obtaining projections in the future for
 you. 
 
-Additionally, you can supply the kindergarteners for future years as well: 
+Additionally, you can supply the kindergarteners for future years as well. Note
+you have to put the quotation mark around the list of kindercounts: 
 
-    python3 calc_projection.py --stdfile feeder_data/feederAndSchool_4560MidtownHighSchool.csv 1 1 7 --ffstart 2023 --ffend 2033 --fastforward --ffkindercounts "1, 2, 3, 4 ,5 ,6 ,7 , 8,9,10"
+    python3 calc_projection.py --stdfile feeder_data/feederAndSchool_4560MidtownHighSchool.csv 1 1 7 --ffstart 2023    --ffend 2033 --fastforward --ffkindercounts "501, 502, 503, 504 ,505 ,506,507,508,509,510"
 
-(Obviously these are not realistic counts here, but I wanted it to be clear). 
+(These kindergartener counts are just for example purposes). 
 
-7 yr acsr| For Period Ending with Progression to 2022-2023 School year: feeder_data/feederAndSchool_4560MidtownHighSchool.csv|q1->q1|False|KK->1:through:11->12|,1.017930071477035,0.9756325067714591,0.9670767040945649,0.9586716148234482,0.9515952206893967,0.9638676013774881,0.9708629297548358,0.9589649558464176,1.016910461032702,0.9114594580189302,0.9754589888317757,0.9693133508646159
-2024 2033
-FF feeder_data/feederAndSchool_4560MidtownHighSchool.csv
-FF Projecting using SM basic method treating FY2023 as actual data start year and using kinder supplied from command line  ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]) for fiscal years 2024-2033
+<pre>
+FF Projecting using SM basic method treating FY2023 as actual data start year and using kinder supplied from command line  ([501, 502, 503, 504, 505, 506, 507, 508, 509, 510]) for fiscal years 2024-2033
 FF coeffs used = 1.017930071477035,0.9756325067714591,0.9670767040945649,0.9586716148234482,0.9515952206893967,0.9638676013774881,0.9708629297548358,0.9589649558464176,1.016910461032702,0.9114594580189302,0.9754589888317757,0.9693133508646159
-FF actual 2022-2023: 509,558,508,524,494,473,467,432,470,474,410,358,360,6037  ['KK-5', '6-8', '9-12'] (note sums do not include Pre-K)
-FF proj.  2023-2024: 1,518,544,491,502,470,456,453,414,478,432,400,347,5506  ['2526', '1323', '1657']
-FF proj.  2024-2025: 2,1,505,526,471,478,453,443,434,421,436,421,388,4979  ['1983', '1330', '1666']
-FF proj.  2025-2026: 3,2,1,488,504,448,461,440,425,441,384,425,408,4430  ['1446', '1326', '1658']
-FF proj.  2026-2027: 4,3,2,1,468,480,432,448,422,432,402,375,412,3881  ['958', '1302', '1621']
-FF proj.  2027-2028: 5,4,3,2,1,445,463,419,430,429,394,392,363,3350  ['460', '1312', '1578']
-FF proj.  2028-2029: 6,5,4,3,2,1,429,450,402,437,391,384,380,2894  ['21', '1281', '1592']
-FF proj.  2029-2030: 7,6,5,4,3,2,1,417,432,409,398,381,372,2437  ['27', '850', '1560']
-FF proj.  2030-2031: 8,7,6,5,4,3,2,1,400,439,373,388,369,2005  ['33', '403', '1569']
-FF proj.  2031-2032: 9,8,7,6,5,4,3,2,1,407,400,364,376,1592  ['39', '6', '1547']
-FF proj.  2032-2033: 10,9,8,7,6,5,4,3,2,1,371,390,353,1169  ['45', '9', '1115']
 
+FF    Year Info     , GKK,G01,G02,G03,G04,G05,G06,G07,G08,G09,G10,G11,G12,Sum,   KK-5,  6-8, 9-12 (note sums do not include Pre-K)
+FF actual 2022-2023:, 509,558,508,524,494,473,467,432,470,474,410,358,360,6037,  3066, 1369, 1602
+FF proj.  2023-2024:, 501,518,544,491,502,470,456,453,414,478,432,400,347,6006,  3026, 1323, 1657
+FF proj.  2024-2025:, 502,510,505,526,471,478,453,443,434,421,436,421,388,5988,  2992, 1330, 1666
+FF proj.  2025-2026:, 503,511,498,488,504,448,461,440,425,441,384,425,408,5936,  2952, 1326, 1658
+FF proj.  2026-2027:, 504,512,499,482,468,480,432,448,422,432,402,375,412,5868,  2945, 1302, 1621
+FF proj.  2027-2028:, 505,513,500,483,462,445,463,419,430,429,394,392,363,5798,  2908, 1312, 1578
+FF proj.  2028-2029:, 506,514,500,484,463,440,429,450,402,437,391,384,380,5780,  2907, 1281, 1592
+FF proj.  2029-2030:, 507,515,501,484,464,441,424,417,432,409,398,381,372,5745,  2912, 1273, 1560
+FF proj.  2030-2031:, 508,516,502,485,464,442,425,412,400,439,373,388,369,5723,  2917, 1237, 1569
+FF proj.  2031-2032:, 509,517,503,485,465,442,426,413,395,407,400,364,376,5702,  2921, 1234, 1547
+FF proj.  2032-2033:, 510,518,504,486,465,442,426,414,396,402,371,390,353,5677,  2925, 1236, 1516
+</pre>
+
+You can also supply a capacity. It will then output % capacity rounded to 3
+digits for each of kk-5,
+6-8, 9-12. (Disreguard the %capacity columns that capacity doesn't apply to). 
+
+<pre>
+FF feeder_data/feederAndSchool_4560MidtownHighSchool.csv
+
+
+FF Projecting using SM basic method treating FY2023 as actual data start year and using kinder supplied from command line  ([501, 502, 503, 504, 505, 506, 507, 508, 509, 510]) for fiscal years 2024-2033
+FF coeffs used = 1.017930071477035,0.9756325067714591,0.9670767040945649,0.9586716148234482,0.9515952206893967,0.9638676013774881,0.9708629297548358,0.9589649558464176,1.016910461032702,0.9114594580189302,0.9754589888317757,0.9693133508646159
+1680 supplied on command line as capacity, will be used to calc %capacity for k-5, 6-8 and 9-12 for the given facility. Disreguard the two meaningless % capacity columns (i.e. the ones it doesn't refer to)
+
+FF    Year Info     , GKK,G01,G02,G03,G04,G05,G06,G07,G08,G09,G10,G11,G12,Sum,   KK-5, KK-5%Cap,  6-8, 6-8%Cap, 9-12, 9-12%Cap
+FF actual 2022-2023:, 509,558,508,524,494,473,467,432,470,474,410,358,360,6037,  3066, 182.500%, 1369, 81.488%, 1602, 95.357%
+FF proj.  2023-2024:, 501,518,544,491,502,470,456,453,414,478,432,400,347,6006,  3026, 180.119%, 1323, 78.750%, 1657, 98.631%
+FF proj.  2024-2025:, 502,510,505,526,471,478,453,443,434,421,436,421,388,5988,  2992, 178.095%, 1330, 79.167%, 1666, 99.167%
+FF proj.  2025-2026:, 503,511,498,488,504,448,461,440,425,441,384,425,408,5936,  2952, 175.714%, 1326, 78.929%, 1658, 98.690%
+FF proj.  2026-2027:, 504,512,499,482,468,480,432,448,422,432,402,375,412,5868,  2945, 175.298%, 1302, 77.500%, 1621, 96.488%
+FF proj.  2027-2028:, 505,513,500,483,462,445,463,419,430,429,394,392,363,5798,  2908, 173.095%, 1312, 78.095%, 1578, 93.929%
+FF proj.  2028-2029:, 506,514,500,484,463,440,429,450,402,437,391,384,380,5780,  2907, 173.036%, 1281, 76.250%, 1592, 94.762%
+FF proj.  2029-2030:, 507,515,501,484,464,441,424,417,432,409,398,381,372,5745,  2912, 173.333%, 1273, 75.774%, 1560, 92.857%
+FF proj.  2030-2031:, 508,516,502,485,464,442,425,412,400,439,373,388,369,5723,  2917, 173.631%, 1237, 73.631%, 1569, 93.393%
+FF proj.  2031-2032:, 509,517,503,485,465,442,426,413,395,407,400,364,376,5702,  2921, 173.869%, 1234, 73.452%, 1547, 92.083%
+FF proj.  2032-2033:, 510,518,504,486,465,442,426,414,396,402,371,390,353,5677,  2925, 174.107%, 1236, 73.571%, 1516, 90.238%
+</pre>
 
 ## Configuring/Obtaining Tool Data
 
@@ -499,18 +533,31 @@ Why are these different?
   cohort is literally the survival rate if you graph them year by year for each cohort. 
 
   However, that slope is really a sum of each effect being multiplied out (to
-  project it's future value) then added together. When you leave a component in
-  you happen to be adjusting to a specific amount when you multiply, you end up
-  causing error because the "multiplicative" effect of the previous amount is
-  kept in even though when you've decided to model it externally. This causes
+  project it's future value) then added together. When you leave a cohort that
+  you happen to be setting to a specific amount when you multiply, you end up
+  causing error because you are "doubly simulating" the cohort progression:
+  once through your addition, and once through your "multiplicative" effect of
+  all cause survival rate. This causes
   overcounting for positive effects, and undercounting for negative effects. 
   That's bad. That's especially likely when the "cause" you're doing this for is
   one that's really a additive factor not truly based on the prior year's cohort size. (Such
   as a new building generating new enrollment instead of a policy change which
-  causes more students to pass). 
+  causes more students to pass). On the building front, additionally remember
+  that gentrfication and other renovations (no matter the ending result on total
+  entrollment), also have a negative effect while the building is vacated as it
+  is upgraded. 
+
+  On building permits specifically: While a building permit may indicate a
+  future student in some number of future years it also may
+  indicate a displaced student now/in immeadiate years as total housing inventory drops. This is a
+  not insignifigant effect given shortages in the carpentry and related fields,
+  such as  City of Atlanta permitting departments, etc which are facing
+  staffing squeezes. 
 
   Simply though: All-cause survivial rate is about all causes. When you wish to
-  independently model a specific cause and add it in after the fact, entirely
-  remove that cause to get the cleanest results. 
+  independently model a specific cause and add to it after the fact, please
+  first entirely
+  remove that cause from the multipliciation to get the cleanest results which tend to have prediction
+  errors centered on the prediction.
 
 
