@@ -21,6 +21,12 @@ introduced first by an example which I'll go through in the Theory Appendix, but
 in short, it's the value you multiply a school's student count in a grade by to project out
 next year's student count.
 
+It additionally has a command to use those rates and the latest year of
+enrollment data to
+project into the future what enrollment might look at. The tool has no way to
+predict kindergartener counts, but you can specify those, or it will just assume
+they are the same as previous years. 
+
 There is defintely a bit of historical cruft sitting around in a few of the
 python files: producing code for internal use vs publication is a different
 beast, and it was time to get these tools over to others at this point instead
@@ -31,6 +37,9 @@ with a check in excel, so hopefully, they are useful still.
 Several other tools
 related to/using this data are not included which I have privately still, but will get them to
 you in the future if you'd like them. 
+
+The output of these tools is designed to be pasted into excel. If I made them
+display on the command line better, they'd look worse in excel. 
 
 ## Tool Data
 
@@ -124,9 +133,9 @@ kindergarten projections.
 ### Checking the tools/other projection coefficients
 
 Now since these tools *don't actually have a source of kindergarten data* for
-the current time spam, they can only do forward projections themselves for
+the current time spam, they do forward projections themselves for
 elementary schools over past data to check the correctness of previous results.
-It does not use projected kindergarteners, just the historical ones though. The
+calc_coeff.py does not use projected kindergarteners, just the historical ones though. The
 tools correctly direguard Pre-K from the school totals.
 
 To do that, run the tool like this: 
@@ -145,7 +154,8 @@ That said, for *high schools*, the kindergarten projection data doesn't really
 matter. After running the *calc_all_progs.py*
 
 Now, for high schools and middle schools, just like needing a source of
-kindergartener data for elementary schools, you need a source of data for 
+kindergartener data for elementary schools, you need a source of data for 8th
+graders and 5th graders to feed those progression calculations.
 
 ### Getting Coefficients for high schools and middle schools
 
@@ -558,6 +568,29 @@ Why are these different?
   independently model a specific cause and add to it after the fact, please
   first entirely
   remove that cause from the multipliciation to get the cleanest results which tend to have prediction
-  errors centered on the prediction.
+  errors centered on the prediction. 
 
 
+# Known Issues
+
+1. The tools do not have a way to currently handle when a school has been rezoned.
+It will calculate a progression rate or project the future not knowing the past
+does not match with the present. I should add a way to specify progression rates
+to the calc_projection tool perhaps to fix that, or perhaps even ratess and/or
+initial data.
+
+2. There is a placeholder school number for Virginia-Highland Elementary as I do
+not know the school number that will show up in future year reports to identify
+it
+
+3. The tool makes good efforts to correctly handle calculating progression rates
+when there is limited data (like a school hasn't existed for the number of years
+required to generate the coefficients). 
+
+4. The mapping file needs to be extended to show student flow outside the
+midtown cluster.
+
+5. The tool's model (everyone in a grade is considered part of a monolithic
+cohort when progressing to the next) is
+coarser than other models that could be used which are similar, especially
+around facility change years (such as 5->6). 
