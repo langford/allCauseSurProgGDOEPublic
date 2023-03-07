@@ -151,7 +151,7 @@ on there:
   python3 calc_coeff.py --stdfile eachschool/school_1664MorningsideElementarySchool.csv 1 1 7 --historicalprojections --historicalprojectionsendyear 2022
 
 That said, for *high schools*, the kindergarten projection data doesn't really
-matter. After running the *calc_all_progs.py*
+matter for the near term. After running the *calc_all_progs.py*
 
 Now, for high schools and middle schools, just like needing a source of
 kindergartener data for elementary schools, you need a source of data for 8th
